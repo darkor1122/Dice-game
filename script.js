@@ -11,22 +11,21 @@ const holdBtn = document.querySelector('.btn--hold');
 const player1Area = document.querySelector('.player--0');
 const player2Area = document.querySelector('.player--1');
 
-const winnerInfo = document.querySelector('.winner-info')
+const winnerInfo = document.querySelector('.winner-info');
 
-const popupNames = document.querySelector('.popup-names')
-const overlay = document.querySelector('.overlay')
-const inputPlr1 = document.querySelector('.plr1')
-const inputPlr2 = document.querySelector('.plr2')
-const okBtn = document.querySelector('.ok-btn')
-const namePlr1 = document.querySelector('#name--0')
-const namePlr2 = document.querySelector('#name--1')
+const popupNames = document.querySelector('.popup-names');
+const overlay = document.querySelector('.overlay');
+const inputPlr1 = document.querySelector('.plr1');
+const inputPlr2 = document.querySelector('.plr2');
+const okBtn = document.querySelector('.ok-btn');
+const namePlr1 = document.querySelector('#name--0');
+const namePlr2 = document.querySelector('#name--1');
 
-const yesBtn = document.querySelector('.yes')
-const noBtn = document.querySelector('.no')
-const rechangePop = document.querySelector('.pop-rechange')
+const yesBtn = document.querySelector('.yes');
+const noBtn = document.querySelector('.no');
+const rechangePop = document.querySelector('.pop-rechange');
 
-
-const allInputs = document.querySelectorAll('input')
+const allInputs = document.querySelectorAll('input');
 
 // const diceImgArr = [
 // 	'./img/dice-1.png',
@@ -50,36 +49,47 @@ diceImg.style.visibility = 'hidden';
 totalScorePlayer1.textContent = 0;
 totalScorePlayer2.textContent = 0;
 
-
 const changeNames = () => {
-
-	if (inputPlr1.value === '' && inputPlr2 !== '') {
-		namePlr1.textContent = 'player 1'
-		namePlr2.textContent = inputPlr2.value
-		popupNames.style.display = 'none'
-		overlay.style.display = 'none'
-	} else if (inputPlr2.value === '' && inputPlr1.value !== '') {
-		namePlr2.textContent = 'player 2'
-		namePlr1.textContent = inputPlr1.value
-		popupNames.style.display = 'none'
-		overlay.style.display = 'none'
-		console.log(`2323`);
-	} else if (inputPlr1.value === '' && inputPlr2.value === '') {
-		namePlr1.textContent = 'player 1'
-		namePlr2.textContent = 'player 2'
-		popupNames.style.display = 'none'
-		overlay.style.display = 'none'
-	} else if (inputPlr1 !== '' && inputPlr2 !== '') {
-		
-		namePlr1.textContent = inputPlr1.value
-		namePlr2.textContent = inputPlr2.value
-		popupNames.style.display = 'none'
-		overlay.style.display = 'none'
+	for (let i = 0; i < allInputs.length; i++) {
+		if (allInputs[i].value === '') {
+			document.querySelector(`#name--${i}`).textContent = allInputs[
+				i
+			].previousElementSibling.textContent.slice(0, 8);
+		} else {
+			document.querySelector(`#name--${i}`).textContent = allInputs[i].value;
+		}
 	}
 
-	console.log(namePlr1.textContent);
-	console.log(namePlr2.textContent);
-}
+	popupNames.style.display = 'none';
+	overlay.style.display = 'none';
+
+	// if (inputPlr1.value === '' && inputPlr2.value !== '') {
+	// 	namePlr1.textContent = 'player 1'
+	// 	namePlr2.textContent = inputPlr2.value
+	// 	popupNames.style.display = 'none'
+	// 	overlay.style.display = 'none'
+	// } else if (inputPlr2.value === '' && inputPlr1.value !== '') {
+	// 	namePlr2.textContent = 'player 2'
+	// 	namePlr1.textContent = inputPlr1.value
+	// 	popupNames.style.display = 'none'
+	// 	overlay.style.display = 'none'
+	// 	console.log(`2323`);
+	// } else if (inputPlr1.value === '' && inputPlr2.value === '') {
+	// 	namePlr1.textContent = 'player 1'
+	// 	namePlr2.textContent = 'player 2'
+	// 	popupNames.style.display = 'none'
+	// 	overlay.style.display = 'none'
+	// } else {
+
+	// 	namePlr1.textContent = inputPlr1.value
+	// 	namePlr2.textContent = inputPlr2.value
+	// 	popupNames.style.display = 'none'
+	// 	overlay.style.display = 'none'
+	// }
+
+	// console.log(namePlr1.textContent);
+	// console.log(namePlr2.textContent);
+};
 
 const switchPlayer = () => {
 	currPts = 0;
@@ -158,15 +168,17 @@ const totalScore = () => {
 		document.querySelector(`#score--${currentPlayer}`).textContent =
 			scores[currentPlayer];
 
-		if (scores[currentPlayer] >= 20) {
+		if (scores[currentPlayer] >= 100) {
 			document
 				.querySelector(`.player--${currentPlayer}`)
 				.classList.add('player--winner');
 			diceImg.style.visibility = 'hidden';
 			playing = false;
-			winnerInfo.style.display = 'block'
-			const winner = document.querySelector(`#name--${currentPlayer}`).textContent
-			winnerInfo.textContent = `${winner} won the game!`
+			winnerInfo.style.display = 'block';
+			const winner = document.querySelector(
+				`#name--${currentPlayer}`
+			).textContent;
+			winnerInfo.textContent = `${winner} won the game!`;
 		}
 
 		switchPlayer();
@@ -174,27 +186,26 @@ const totalScore = () => {
 };
 
 const rechangeNames = () => {
-	rechangePop.style.display = 'flex'
+	rechangePop.style.display = 'flex';
 	yesBtn.addEventListener('click', () => {
-		rechangePop.style.display = 'none'
+		rechangePop.style.display = 'none';
 		popupNames.style.display = 'flex';
 		overlay.style.display = 'block';
-		
-	})
+	});
 	noBtn.addEventListener('click', () => {
-		rechangePop.style.display = 'none'
-	})
-}
+		rechangePop.style.display = 'none';
+	});
+};
 
 const resetGame = () => {
-	rechangeNames()
-	winnerInfo.style.display = 'none'
+	rechangeNames();
+	winnerInfo.style.display = 'none';
 	diceImg.style.visibility = 'hidden';
 	totalScorePlayer1.textContent = 0;
 	totalScorePlayer2.textContent = 0;
 	scores = [0, 0];
 	currPts = 0;
-	currentPlayer = 0
+	currentPlayer = 0;
 	// total1 = 0;
 	// total2 = 0;
 	player2Area.classList.remove('player--active');
@@ -205,7 +216,9 @@ const resetGame = () => {
 	playing = true;
 };
 
-okBtn.addEventListener('click', changeNames)
+okBtn.addEventListener('click', changeNames);
 newGameBtn.addEventListener('click', resetGame);
+
 rollDiceBtn.addEventListener('click', generateRandomDiceRoll);
+
 holdBtn.addEventListener('click', totalScore);
